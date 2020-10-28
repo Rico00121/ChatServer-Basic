@@ -1,11 +1,11 @@
 package programming3.chatsys;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public abstract class TextDatabaseItem {
+public abstract class TextDatabaseItem  {
     public void save(String filename) {
         this.save(new File(filename));
     }
@@ -18,4 +18,7 @@ public abstract class TextDatabaseItem {
         }
     }
     public abstract String format();
+
+
+
 }

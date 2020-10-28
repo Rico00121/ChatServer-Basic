@@ -105,8 +105,6 @@ public class User extends TextDatabaseItem {
     }
 
 
-    public void save(File file){
 
-    }
 
 }
