@@ -2,6 +2,7 @@ package programming3.chatsys.threads;
 
 import programming3.chatsys.data.Database;
 import programming3.chatsys.data.MutexTextDatabase;
+import programming3.chatsys.data.SecureTextDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class RunChat {
     public static void main(String[] args) throws InterruptedException {
         //database set
-        Database database=new MutexTextDatabase("messages_test.db","users_test.db");
+        Database database=new SecureTextDatabase("messages_test.db","users_test.db");
         //server
         ThreadServer server=new ThreadServer(database);
         //Thread serverThread=new Thread(server);
