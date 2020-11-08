@@ -5,7 +5,7 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class MessageQueue{
+public abstract class MessageQueue implements Runnable{
     private BlockingQueue<ChatMessage> queue;
 
     public MessageQueue() {
@@ -18,25 +18,41 @@ public class MessageQueue{
 
 
     public ChatMessage getMessage(int waitTime) throws InterruptedException {
-        if (this.queue.isEmpty()){
-            Thread.sleep(waitTime);
-            return getMessage(waitTime);
+        while(true){
+            if (this.queue.isEmpty()){
+                Thread.sleep(waitTime);
+            }
+            else
+                return this.queue.poll();
         }
-        else
-            return this.queue.poll();
-    }
-
-    public void initialize(){
-
-
-    }
-    public void handleMessage(ChatMessage message){
 
     }
 
-    public void shutdown(){
+    public abstract void initialize();
 
+
+
+    public abstract void shutdown();
+
+    //Client and Server same operation.
+    @Override
+    public void run() {
+        while(true){
+            try {
+                ChatMessage chatMessage=getMessage(5000);
+                handleMessage(chatMessage);
+
+            } catch (InterruptedException e) {
+                shutdown();
+                e.printStackTrace();
+                break;
+            }
+        }
     }
+
+    public abstract void handleMessage(ChatMessage message) throws InterruptedException;
+
+
 
 
 }
