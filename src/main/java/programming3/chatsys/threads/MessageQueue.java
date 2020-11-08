@@ -23,7 +23,7 @@ public abstract class MessageQueue implements Runnable{
                 Thread.sleep(waitTime);
             }
             else
-                return this.queue.poll();
+                return this.queue.take();
         }
 
     }

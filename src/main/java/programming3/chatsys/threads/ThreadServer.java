@@ -3,6 +3,7 @@ import programming3.chatsys.data.ChatMessage;
 import programming3.chatsys.data.Database;
 
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class ThreadServer extends MessageQueue {
     }
 
     public void initialize() {
-        clients=new HashSet<>();
+        clients=Collections.synchronizedSet(new HashSet<ThreadClient>());
     }
 
     //make Set of clients accept the message

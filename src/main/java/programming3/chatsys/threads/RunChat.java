@@ -33,6 +33,7 @@ public class RunChat {
 
         //executors test
         ExecutorService exec= Executors.newCachedThreadPool();
+        exec.submit(server);
         exec.submit(client1);
         exec.submit(client2);
         exec.submit(answeringClient);
