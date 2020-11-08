@@ -12,8 +12,6 @@ public class ThreadServer extends MessageQueue {
 
     public ThreadServer(Database database) {
         this.database = database;
-        initialize();
-
     }
 
     public void initialize() {
@@ -23,33 +21,33 @@ public class ThreadServer extends MessageQueue {
     //make Set of clients accept the message
     private void forward(ChatMessage message) throws InterruptedException {
         for (ThreadClient client:clients) {
-            if (client.getName()!=message.getUserName())
+            if (client.getUserName()!=message.getUserName())
                 client.send(message);
         }
     }
     //Add Client to Set of Clients
     public void register(ThreadClient client){
         this.clients.add(client);
-        System.out.println("Client register success!");
+        System.out.println("<Client> "+client.getUserName()+" register success!");
     }
     //Delete Client from Set of Clients
     public void unregister(String clientName){
         for (ThreadClient client:clients) {
-            if (client.getName()==clientName){
-                System.out.println("Client"+client.getName()+"unregister success!");
+            if (client.getUserName()==clientName){
+                System.out.println("<Client> "+client.getUserName()+" unregister success!");
                 clients.remove(client);
             }
         }
     }
 
     public void shutdown() {
-        System.out.println("Server break.");
+        System.out.println("<Server> break.");
     }
 
     public void handleMessage(ChatMessage chatMessage) throws InterruptedException {
-        System.out.println("Server received message"+chatMessage);
+        System.out.println("<Server> received message "+chatMessage.getMessage()+" from "+chatMessage.getUserName()+" "+chatMessage.getTimestamp());
         chatMessage=this.database.addMessage(chatMessage.getUserName(),chatMessage.getMessage());
-        System.out.println("Server saved message"+chatMessage);
+        System.out.println("<Server> saved message "+chatMessage);
         this.forward(chatMessage);
     }
 }

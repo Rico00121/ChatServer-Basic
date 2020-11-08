@@ -37,6 +37,7 @@ public abstract class MessageQueue implements Runnable{
     //Client and Server same operation.
     @Override
     public void run() {
+        initialize();
         while(true){
             try {
                 ChatMessage chatMessage=getMessage(5000);
