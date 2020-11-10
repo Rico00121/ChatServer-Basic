@@ -1,6 +1,9 @@
 package programming3.chatsys.threads;
 
 import programming3.chatsys.data.ChatMessage;
+/**
+ * @author Rico00121
+ */
 
 public class AnsweringThreadClient extends ThreadClient{
 

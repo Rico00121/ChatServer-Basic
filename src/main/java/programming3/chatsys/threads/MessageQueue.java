@@ -4,7 +4,9 @@ import programming3.chatsys.data.ChatMessage;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
+/**
+ * @author Rico00121
+ */
 public abstract class MessageQueue implements Runnable{
     private BlockingQueue<ChatMessage> queue;
 

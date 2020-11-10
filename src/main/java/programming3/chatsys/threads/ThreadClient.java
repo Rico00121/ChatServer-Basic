@@ -1,7 +1,9 @@
 package programming3.chatsys.threads;
 
 import programming3.chatsys.data.ChatMessage;
-
+/**
+ * @author Rico00121
+ */
 public class ThreadClient extends MessageQueue{
     private ThreadServer server;
     private String userName;

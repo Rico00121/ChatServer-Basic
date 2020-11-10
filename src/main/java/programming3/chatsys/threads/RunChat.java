@@ -7,7 +7,9 @@ import programming3.chatsys.data.SecureTextDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * @author Rico00121
+ */
 public class RunChat {
     public static void main(String[] args) throws InterruptedException {
         //database set

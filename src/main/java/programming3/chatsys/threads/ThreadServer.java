@@ -6,7 +6,9 @@ import programming3.chatsys.data.Database;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * @author Rico00121
+ */
 public class ThreadServer extends MessageQueue {
     public Set<ThreadClient> clients;
     private Database database;
