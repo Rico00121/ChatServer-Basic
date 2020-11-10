@@ -7,13 +7,14 @@ import programming3.chatsys.data.User;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 /**
  * @author Rico00121
  */
 public class TCPChatServerSession implements Runnable {
-    private Database database;
-    private Socket socket;
+    private final Database database;
+    private final Socket socket;
     private BufferedReader reader;
     private BufferedWriter writer;
     private boolean loginStatus=false;
@@ -28,14 +29,15 @@ public class TCPChatServerSession implements Runnable {
     public void run() {
         try {
             //Do some initialization
-            this.reader=new BufferedReader(new InputStreamReader(this.socket.getInputStream(),"UTF-8"));
-            this.writer=new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream(),"UTF-8"));
+            this.reader=new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8));
+            this.writer=new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8));
             for (String line=this.reader.readLine();line!=null;line=this.reader.readLine()){
                 this.handleMessage(line);
             }
         } catch (IOException e) {
             e.getMessage();
         }
+        //After a client input wrong command,close it.
         finally {
             try {
                 this.socket.close();
@@ -47,6 +49,7 @@ public class TCPChatServerSession implements Runnable {
         }
 
     }
+    //accept command and handle to do operation
     private void handleMessage(String line) throws IOException {
         String[] split=line.split(" ");
         if (split.length>0){
@@ -115,10 +118,12 @@ public class TCPChatServerSession implements Runnable {
         }
 
     }
+    //send message to server to keep the connection alive.
     private void keepAlive() throws IOException {
         this.writer.write("Keep connection with server....\r\n");
         this.writer.flush();
     }
+    //When server accept a Error message,it will print error message in client and close after 5s.
     private void handleError(String line) throws IOException, InterruptedException {
         this.writer.write("ERROR "+line+"\r\n");
         this.writer.write("After 5 seconds,the window will close...\r\n");
@@ -127,19 +132,23 @@ public class TCPChatServerSession implements Runnable {
 
         socket.close();
     }
+    //if the command is not error just uncompleted,tip it.
     private void handleUncompletedCommand() throws IOException {
         this.writer.write("Please complete the command.\r\n");
         this.writer.flush();
     }
+    //input a number n and return n recent messages,if not have n,return max messages.
     private List<ChatMessage> handleRecentMessages(int n){
         List<ChatMessage> messages=database.readMessages();
         n = Math.min(messages.size(), n);
         return messages.subList(messages.size() - n,messages.size());
     }
+    //get the user's unread message and return a List of it.
     private List<ChatMessage> handleUnreadMessage(){
         List<ChatMessage> messages=database.getUnreadMessages(userName);
         return messages;
     }
+    //send messages to client.
     private void sendMessages(List<ChatMessage> messages) throws IOException {
         System.out.println("Sending " + messages.size() + " to " + socket);
         this.writer.write("MESSAGES "+messages.size()+"\r\n");
@@ -149,19 +158,23 @@ public class TCPChatServerSession implements Runnable {
         this.writer.flush();
 
     }
+    //be used in Method sendMessages.
     private void sendMessage(ChatMessage message) throws IOException {
         this.writer.write("MESSAGE "+message.getUserName()+" "+message.getTimestamp()+" "+message.getMessage()+"\r\n");
     }
+    //POST command.
     private void handlePostMessage(String message) throws IOException {
         System.out.println("Message posted by " + socket + ": " + message);
         database.addMessage(userName,message);
         this.writer.write("OK\r\n");
         this.writer.flush();
     }
+    //if the status is unauthenticated,it will give tip.
     private void handleUnauthenticated() throws IOException {
         this.writer.write("ERROR unauthenticated user\r\n");
         this.writer.flush();
     }
+    //do register operation
     private void handleRegister(User user) throws IOException {
         if (database.register(user)){
             this.writer.write("OK\r\n");
@@ -172,6 +185,7 @@ public class TCPChatServerSession implements Runnable {
         this.writer.flush();
 
     }
+    //judge whether login.
     private void handleLogin(String userName, String password) throws IOException {
         if (database.authenticate(userName,password)){
             this.writer.write("OK\r\n");

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class RunChat {
     public static void main(String[] args) throws InterruptedException {
         //database set
-        Database database=new SecureTextDatabase("messages_test.db","users_test.db");
+        Database database=new SecureTextDatabase("messages.db","users.db");
         //server
         ThreadServer server=new ThreadServer(database);
         //Thread serverThread=new Thread(server);

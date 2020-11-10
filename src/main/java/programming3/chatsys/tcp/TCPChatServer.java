@@ -22,13 +22,16 @@ public class TCPChatServer {
         this.timeout = timeout;
         this.database = database;
     }
+    //For server's start
     public void start()  {
         isRunning=true;
         try {
             serverSocket=new ServerSocket(port);
             while (this.isRunning) {
+                //do some initialization
                 Socket socket=serverSocket.accept();
                 socket.setSoTimeout(timeout);
+                //when a socket join in,print message and create a new task to keep server and socket session.
                 System.out.println("Got connection from " + socket);
                 Thread task=new Thread(new TCPChatServerSession(socket,database));
                 task.start();
@@ -41,15 +44,16 @@ public class TCPChatServer {
 
 
     }
+    //For server's stop.
     public void stop() throws IOException {
         isRunning=false;
         serverSocket.close();
     }
 
     public static void main(String[] args) {
-        Database mydatabse=new SecureTextDatabase("messages_test.db","users_test.db");
+        Database database=new SecureTextDatabase("messages.db","users.db");
 
-        TCPChatServer server=new TCPChatServer(8080,500000,mydatabse);
+        TCPChatServer server=new TCPChatServer(8080,500000,database);
         server.start();
     }
 }

@@ -9,8 +9,8 @@ import java.io.File;
  * @author Maelick Claes (maelick.claes@oulu.fi)
  */
 public class TestData {
-    public static final File MESSAGES_DB = new File("messages_test.db");
-    public static final File USERS_DB = new File("users_test.db");
+    public static final File MESSAGES_DB = new File("messages.db");
+    public static final File USERS_DB = new File("users.db");
 
     public static final User user1 = new User("maelick", "Maëlick", "mypassword");
     public static final User user2 = new User("johndoe", "John Doe", "thisissecret");
