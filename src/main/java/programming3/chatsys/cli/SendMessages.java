@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @author Maelick Claes (maelick.claes@oulu.fi)
  */
 public class SendMessages {
-    public static void main(String[] args) throws IOException, SQLException {
+    public static void main(String[] args) throws IOException{
         String userName = args[0];
         Database db = new TextDatabase("messages.db", "users.db");
         System.out.println("Welcome " + userName);

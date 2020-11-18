@@ -57,7 +57,7 @@ public class TextDatabase implements Database {
     }
 
     @Override
-    public List<ChatMessage> readMessages(int n) throws SQLException {
+    public List<ChatMessage> readMessages(int n){
         return null;
     }
 
