@@ -43,6 +43,11 @@ public class User extends TextDatabaseItem {
         super();
         this.init(userName, fullName, password, 0);
     }
+    public User(String userName, String fullName, String password,int lastReadId) {
+        super();
+        this.init(userName, fullName, password, lastReadId);
+    }
+
 
     private void init(String userName, String fullName, String password, int lastReadId) {
         if (!userNameIsValid(userName)) {

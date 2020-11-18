@@ -1,6 +1,7 @@
 package programming3.chatsys.data;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,11 @@ public class TextDatabase implements Database {
         } catch(IOException e) {
         }
         return messages;
+    }
+
+    @Override
+    public List<ChatMessage> readMessages(int n) throws SQLException {
+        return null;
     }
 
     /**

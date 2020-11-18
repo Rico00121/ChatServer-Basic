@@ -8,9 +8,12 @@ import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.List;
 /**
  * @author Rico00121
+ * refer a  little thinking from code example.
+ * All work did by myself.
  */
 public class TCPChatServerSession implements Runnable {
     private final Database database;
@@ -34,7 +37,7 @@ public class TCPChatServerSession implements Runnable {
             for (String line=this.reader.readLine();line!=null;line=this.reader.readLine()){
                 this.handleMessage(line);
             }
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.getMessage();
         }
         //After a client input wrong command,close it.
@@ -50,7 +53,7 @@ public class TCPChatServerSession implements Runnable {
 
     }
     //accept command and handle to do operation
-    private void handleMessage(String line) throws IOException {
+    private void handleMessage(String line) throws IOException, SQLException {
         String[] split=line.split(" ");
         if (split.length>0){
             switch (split[0]){
@@ -75,7 +78,7 @@ public class TCPChatServerSession implements Runnable {
                                 handleError(line);
                             }
                         }
-                    }catch (ArrayIndexOutOfBoundsException | InterruptedException e){
+                    }catch (ArrayIndexOutOfBoundsException | InterruptedException | SQLException e){
                         handleUncompletedCommand();
                     }
                     break;
@@ -138,13 +141,13 @@ public class TCPChatServerSession implements Runnable {
         this.writer.flush();
     }
     //input a number n and return n recent messages,if not have n,return max messages.
-    private List<ChatMessage> handleRecentMessages(int n){
+    private List<ChatMessage> handleRecentMessages(int n) throws SQLException {
         List<ChatMessage> messages=database.readMessages();
         n = Math.min(messages.size(), n);
         return messages.subList(messages.size() - n,messages.size());
     }
     //get the user's unread message and return a List of it.
-    private List<ChatMessage> handleUnreadMessage(){
+    private List<ChatMessage> handleUnreadMessage() throws SQLException {
         List<ChatMessage> messages=database.getUnreadMessages(userName);
         return messages;
     }
@@ -163,7 +166,7 @@ public class TCPChatServerSession implements Runnable {
         this.writer.write("MESSAGE "+message.getUserName()+" "+message.getTimestamp()+" "+message.getMessage()+"\r\n");
     }
     //POST command.
-    private void handlePostMessage(String message) throws IOException {
+    private void handlePostMessage(String message) throws IOException, SQLException {
         System.out.println("Message posted by " + socket + ": " + message);
         database.addMessage(userName,message);
         this.writer.write("OK\r\n");
@@ -175,7 +178,7 @@ public class TCPChatServerSession implements Runnable {
         this.writer.flush();
     }
     //do register operation
-    private void handleRegister(User user) throws IOException {
+    private void handleRegister(User user) throws IOException, SQLException {
         if (database.register(user)){
             this.writer.write("OK\r\n");
         }
@@ -186,7 +189,7 @@ public class TCPChatServerSession implements Runnable {
 
     }
     //judge whether login.
-    private void handleLogin(String userName, String password) throws IOException {
+    private void handleLogin(String userName, String password) throws IOException, SQLException {
         if (database.authenticate(userName,password)){
             this.writer.write("OK\r\n");
             this.writer.flush();

@@ -4,6 +4,7 @@ import programming3.chatsys.data.ChatMessage;
 import programming3.chatsys.data.Database;
 import programming3.chatsys.data.TextDatabase;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Scanner;
  * @author Maelick Claes (maelick.claes@oulu.fi)
  */
 public class SendMessagesAuthentication {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         String userName = args[0];
         String password = args[1];
         Database db = new TextDatabase("messages.db", "users.db");

@@ -3,7 +3,11 @@ package programming3.chatsys.tcp;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
-
+/**
+ * @author Rico00121
+ * refer a  little thinking from code example.
+ * All work did by myself.
+ */
 public class TCPChatClient {
     private String serverHost;
     private int serverPort;

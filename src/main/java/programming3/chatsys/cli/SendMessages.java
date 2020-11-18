@@ -5,6 +5,7 @@ import programming3.chatsys.data.Database;
 import programming3.chatsys.data.TextDatabase;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Scanner;
  * @author Maelick Claes (maelick.claes@oulu.fi)
  */
 public class SendMessages {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         String userName = args[0];
         Database db = new TextDatabase("messages.db", "users.db");
         System.out.println("Welcome " + userName);

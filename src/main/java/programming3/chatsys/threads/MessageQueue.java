@@ -1,6 +1,8 @@
 package programming3.chatsys.threads;
 
 import programming3.chatsys.data.ChatMessage;
+
+import java.sql.SQLException;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -45,7 +47,7 @@ public abstract class MessageQueue implements Runnable{
                 ChatMessage chatMessage=getMessage(5000);
                 handleMessage(chatMessage);
 
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | SQLException e) {
                 shutdown();
                 e.printStackTrace();
                 break;
@@ -53,7 +55,7 @@ public abstract class MessageQueue implements Runnable{
         }
     }
 
-    public abstract void handleMessage(ChatMessage message) throws InterruptedException;
+    public abstract void handleMessage(ChatMessage message) throws InterruptedException, SQLException;
 
 
 

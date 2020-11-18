@@ -3,6 +3,7 @@ import programming3.chatsys.data.ChatMessage;
 import programming3.chatsys.data.Database;
 
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class ThreadServer extends MessageQueue {
         System.out.println("<Server> break.");
     }
 
-    public void handleMessage(ChatMessage chatMessage) throws InterruptedException {
+    public void handleMessage(ChatMessage chatMessage) throws InterruptedException, SQLException {
         System.out.println("<Server> received message "+chatMessage.getMessage()+" from "+chatMessage.getUserName()+" "+chatMessage.getTimestamp());
         chatMessage=this.database.addMessage(chatMessage.getUserName(),chatMessage.getMessage());
         System.out.println("<Server> saved message "+chatMessage);
