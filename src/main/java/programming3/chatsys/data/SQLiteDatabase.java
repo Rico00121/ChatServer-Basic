@@ -2,7 +2,9 @@ package programming3.chatsys.data;
 
 import java.sql.*;
 import java.util.*;
-
+/**
+ * @author Rico00121 (837043207@qq.com)
+ */
 public class SQLiteDatabase implements Database {
     protected Connection connection;
 
@@ -201,11 +203,7 @@ public class SQLiteDatabase implements Database {
             }
             resultSet.close();
             if (!unreadMessages.isEmpty()) {
-                String query2 = "UPDATE users SET last_read_id = ? WHERE username = ?";
-                PreparedStatement statement2 = connection.prepareStatement(query2);
-                statement2.setInt(1, this.lastId(unreadMessages));
-                statement2.setString(2, userName);
-                statement2.executeUpdate();
+                updateLastReadId(userName, this.lastId(unreadMessages));
             }
 
             return unreadMessages;
@@ -214,6 +212,14 @@ public class SQLiteDatabase implements Database {
             return null;
         }
 
+    }
+
+    private void updateLastReadId(String userName, int id) throws SQLException {
+        String query2 = "UPDATE users SET last_read_id = ? WHERE username = ?";
+        PreparedStatement statement2 = connection.prepareStatement(query2);
+        statement2.setInt(1, id);
+        statement2.setString(2, userName);
+        statement2.executeUpdate();
     }
 
 }
