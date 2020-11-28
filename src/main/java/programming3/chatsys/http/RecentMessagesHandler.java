@@ -15,7 +15,6 @@ public class RecentMessagesHandler extends AbstractHandler implements HttpHandle
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
         printRequest(httpExchange);
         StringWriter writer=new StringWriter();
         int responseCode=handleGetMessages(httpExchange,writer);

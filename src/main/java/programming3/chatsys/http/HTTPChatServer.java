@@ -27,6 +27,7 @@ public class HTTPChatServer {
     private void initContexts(){
         server.createContext("/recent",new RecentMessagesHandler(database));
         server.createContext("/message",new PostMessageHandler(database));
+        server.createContext("/unread",new UnreadMessagesHandler(database));
     }
     public void start(){
         server.start();

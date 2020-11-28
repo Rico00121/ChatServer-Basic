@@ -53,14 +53,5 @@ public class PostMessageHandler extends AbstractHandler implements HttpHandler {
         }
     }
 
-    /**
-     * Get the username of this uri query.
-     * @param httpExchange
-     * @return query's username
-     */
-    private String getUserName(HttpExchange httpExchange){
-        String query=httpExchange.getRequestURI().getQuery();
-        String userName=query.split("&")[0].split("=")[1];
-        return userName;
-    }
+
 }

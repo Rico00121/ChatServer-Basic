@@ -116,5 +116,15 @@ public abstract class AbstractHandler{
         System.out.println("Request method: " + httpExchange.getRequestMethod());
         System.out.println("Request headers: " + httpExchange.getRequestHeaders().entrySet());
     }
+    /**
+     * Get the username of this uri query.
+     * @param httpExchange
+     * @return query's username
+     */
+    public String getUserName(HttpExchange httpExchange){
+        String query=httpExchange.getRequestURI().getQuery();
+        String userName=query.split("&")[0].split("=")[1];
+        return userName;
+    }
 
 }
