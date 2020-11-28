@@ -23,6 +23,14 @@ public class UnreadMessagesHandler extends AbstractHandler implements HttpHandle
         int responseCode=handleGetUnreadMessages(httpExchange,writer);
         sendResponse(httpExchange,responseCode,writer.toString());
     }
+
+    /**
+     * handle unread messages
+     * @param httpExchange
+     * @param writer
+     * @return
+     * @throws IOException
+     */
     private int handleGetUnreadMessages(HttpExchange httpExchange, Writer writer) throws IOException {
         try {
             if (authenticate(httpExchange.getRequestURI())){
@@ -32,11 +40,11 @@ public class UnreadMessagesHandler extends AbstractHandler implements HttpHandle
             }
             else{
                 writeError(writer,"Invalid username or password");
-                return 400;
+                return 401;
             }
         } catch (Exception e) {
             writeError(writer, e.getMessage());
-            return 400;
         }
+        return 405;
     }
 }

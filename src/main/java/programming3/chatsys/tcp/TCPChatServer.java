@@ -52,10 +52,5 @@ public class TCPChatServer {
         serverSocket.close();
     }
 
-    public static void main(String[] args) {
-        Database database=new SecureTextDatabase("messages.db","users.db");
 
-        TCPChatServer server=new TCPChatServer(8080,500000,database);
-        server.start();
-    }
 }

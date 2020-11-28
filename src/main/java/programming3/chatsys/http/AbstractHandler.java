@@ -97,6 +97,7 @@ public abstract class AbstractHandler{
      */
     public void sendResponse(HttpExchange httpExchange, int code, String response) throws IOException {
         System.out.println("Send reply code<"+code+"> to "+httpExchange.getRemoteAddress());
+        httpExchange.getResponseHeaders().add("Content-Type","text/json");
         httpExchange.sendResponseHeaders(code,response.getBytes("UTF-8").length);
         BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(httpExchange.getResponseBody(),"UTF-8"));
         writer.write(response);

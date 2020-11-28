@@ -28,6 +28,7 @@ public class HTTPChatServer {
         server.createContext("/recent",new RecentMessagesHandler(database));
         server.createContext("/message",new PostMessageHandler(database));
         server.createContext("/unread",new UnreadMessagesHandler(database));
+        server.createContext("/user",new RegisterUserHandler(database));
     }
     public void start(){
         server.start();
@@ -37,8 +38,4 @@ public class HTTPChatServer {
         server.stop(0);
     }
 
-    public static void main(String[] args) throws IOException {
-        HTTPChatServer server=new HTTPChatServer(new SQLiteDatabase("test.sqlite"),80);
-        server.start();
-    }
 }

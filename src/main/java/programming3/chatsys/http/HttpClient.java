@@ -8,13 +8,17 @@ import java.net.URL;
 
 /**
  * @author Maelick Claes (maelick.claes@oulu.fi)
+ * Do some change by Rico.
  */
 public class HttpClient {
     public static void main(String[] args) throws IOException {
         String address="http://localhost/message/?username=Rico&password=123456cs";
-        String method="POST";
-        String query="{message:\"Hello World in JSON2!\"}";
-        httpRequest(address,method,query);
+        String POST="POST";
+        String query="{message:\"Hello World in JSON3!\"}";
+        String address2="http://localhost/user/user_2";
+        String GET="GET";
+        String query2="{\"username\":\"user_2\",\"fullname\":\"Full Name\",\"password\":\"PassWord\"}";
+        httpRequest(address,POST,query);
     }
     public static void httpRequest(String address, String method, String query) throws IOException {
         URL url = new URL(address);

@@ -37,7 +37,6 @@ public class PostMessageHandler extends AbstractHandler implements HttpHandler {
                 String message=object.optString("message");
                 if (message==null){
                     writeError(writer,"null message.");
-                    return 400;
                 }else {
                     database.addMessage(getUserName(httpExchange),message);
                     return 200;
@@ -45,12 +44,12 @@ public class PostMessageHandler extends AbstractHandler implements HttpHandler {
             }
             else{
                 writeError(writer,"Invalid username or password");
-                return 400;
             }
         } catch (Exception e) {
             writeError(writer,e.getMessage());
-            return 400;
+            return 405;
         }
+        return 400;
     }
 
 
