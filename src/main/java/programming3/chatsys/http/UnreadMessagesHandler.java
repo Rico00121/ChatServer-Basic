@@ -20,7 +20,10 @@ public class UnreadMessagesHandler extends AbstractHandler implements HttpHandle
     public void handle(HttpExchange httpExchange) throws IOException {
         printRequest(httpExchange);
         StringWriter writer=new StringWriter();
-        int responseCode=handleGetUnreadMessages(httpExchange,writer);
+        int responseCode=405;
+        if (httpExchange.getRequestMethod().equals("GET")){
+            responseCode=handleGetUnreadMessages(httpExchange,writer);
+        }
         sendResponse(httpExchange,responseCode,writer.toString());
     }
 

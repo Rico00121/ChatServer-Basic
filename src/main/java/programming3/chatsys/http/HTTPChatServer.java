@@ -25,15 +25,19 @@ public class HTTPChatServer {
      * Create context.
      */
     private void initContexts(){
-        server.createContext("/recent",new RecentMessagesHandler(database));
-        server.createContext("/message",new PostMessageHandler(database));
-        server.createContext("/unread",new UnreadMessagesHandler(database));
-        server.createContext("/user",new RegisterUserHandler(database));
+        server.createContext("/recent/",new RecentMessagesHandler(database));
+        server.createContext("/message/",new PostMessageHandler(database));
+        server.createContext("/unread/",new UnreadMessagesHandler(database));
+        server.createContext("/user/",new RegisterUserHandler(database));
     }
     public void start(){
         server.start();
         System.out.println("Server started");
     }
+
+    /**
+     * stop server with no delay.
+     */
     public void stop(){
         server.stop(0);
     }

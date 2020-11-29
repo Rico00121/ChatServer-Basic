@@ -12,13 +12,15 @@ import java.net.URL;
  */
 public class HttpClient {
     public static void main(String[] args) throws IOException {
-        String address="http://localhost/message/?username=Rico&password=123456cs";
+
+        String address="http://localhost/message/?username=user1&password=mypassword";
         String POST="POST";
-        String query="{message:\"Hello World in JSON3!\"}";
-        String address2="http://localhost/user/user_2";
         String GET="GET";
-        String query2="{\"username\":\"user_2\",\"fullname\":\"Full Name\",\"password\":\"PassWord\"}";
-        httpRequest(address,POST,query);
+        String query="{message:\"Hello World user1!\"}";
+        //register.
+        String address2="http://localhost/user/user9";
+        String query2="{\"username\":\"user9\",\"fullname\":\"Full Name\",\"password\":\"PassWord\"}";
+        httpRequest(address2,"DELETE",query2);
     }
     public static void httpRequest(String address, String method, String query) throws IOException {
         URL url = new URL(address);

@@ -22,7 +22,10 @@ public class RegisterUserHandler extends AbstractHandler implements HttpHandler 
         printRequest(httpExchange);
         BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
         StringWriter writer=new StringWriter();
-        int responseCode=handlePostRegister(httpExchange,reader,writer);
+        int responseCode=405;
+        if (httpExchange.getRequestMethod().equals("POST")){
+            responseCode=handlePostRegister(httpExchange,reader,writer);
+        }
         sendResponse(httpExchange,responseCode,writer.toString());
     }
     private int handlePostRegister(HttpExchange httpExchange, Reader reader, Writer writer) throws IOException {
@@ -34,6 +37,10 @@ public class RegisterUserHandler extends AbstractHandler implements HttpHandler 
                 if (database.register(user)){
                     return 200;
                 }
+                else {
+                    writeError(writer,"Username already exists");
+                    return 400;
+                }
             }
             else{
                 writeError(writer,"The value of the username don't match the one in the URI.");
@@ -41,8 +48,8 @@ public class RegisterUserHandler extends AbstractHandler implements HttpHandler 
             }
         } catch (IOException e) {
             writeError(writer,e.getMessage());
+            return 405;
         }
-        return 405;
     }
 
     /**
@@ -54,7 +61,7 @@ public class RegisterUserHandler extends AbstractHandler implements HttpHandler 
     public String getUserName(HttpExchange httpExchange){
         String root = httpExchange.getHttpContext().getPath();
         String path = httpExchange.getRequestURI().getPath();
-        return path.substring(root.length()).split("/", 2)[1];
+        return path.substring(root.length()).split("/", 1)[0];
     }
 
 

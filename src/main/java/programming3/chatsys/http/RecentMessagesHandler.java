@@ -17,7 +17,10 @@ public class RecentMessagesHandler extends AbstractHandler implements HttpHandle
     public void handle(HttpExchange httpExchange) throws IOException {
         printRequest(httpExchange);
         StringWriter writer=new StringWriter();
-        int responseCode=handleGetMessages(httpExchange,writer);
+        int responseCode=405;
+        if (httpExchange.getRequestMethod().equals("GET")){
+            responseCode=handleGetMessages(httpExchange,writer);
+        }
         sendResponse(httpExchange,responseCode,writer.toString());
     }
 
@@ -29,7 +32,7 @@ public class RecentMessagesHandler extends AbstractHandler implements HttpHandle
     private int getN(HttpExchange httpExchange){
         String root = httpExchange.getHttpContext().getPath();
         String path = httpExchange.getRequestURI().getPath();
-        return Integer.parseInt(path.substring(root.length()).split("/", 2)[1]);
+        return Integer.parseInt(path.substring(root.length()).split("/", 1)[0]);
     }
 
     /**

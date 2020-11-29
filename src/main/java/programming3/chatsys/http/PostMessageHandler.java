@@ -18,7 +18,10 @@ public class PostMessageHandler extends AbstractHandler implements HttpHandler {
         printRequest(httpExchange);
         BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
         StringWriter writer=new StringWriter();
-        int responseCode=handlePostMessage(httpExchange,reader,writer);
+        int responseCode=405;
+        if (httpExchange.getRequestMethod().equals("POST")){
+            responseCode=handlePostMessage(httpExchange,reader,writer);
+        }
         sendResponse(httpExchange,responseCode,writer.toString());
     }
 
