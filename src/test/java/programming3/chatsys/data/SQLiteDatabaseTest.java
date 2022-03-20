@@ -14,7 +14,7 @@ class SQLiteDatabaseTest {
     @BeforeAll
     public static void init(){
         System.out.println("初始化数据");
-        database=new SQLiteDatabase("test.sqlite");
+        database=new SQLiteDatabase("chatsys.sqlite");
     }
     @AfterAll
     public static void finish(){

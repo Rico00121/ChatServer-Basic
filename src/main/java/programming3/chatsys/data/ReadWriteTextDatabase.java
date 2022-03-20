@@ -6,9 +6,7 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-/**
- * @author Maelick Claes (maelick.claes@oulu.fi)
- */
+
 public class ReadWriteTextDatabase extends TextDatabase {
     private final ReadWriteLock usersLock = new ReentrantReadWriteLock();
     private final ReadWriteLock messagesLock = new ReentrantReadWriteLock();

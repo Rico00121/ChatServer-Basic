@@ -9,10 +9,11 @@ import java.net.URL;
 /**
  * @author Maelick Claes (maelick.claes@oulu.fi)
  * Do some change by Rico.
+ * Just for testing register and post message.
  */
 public class HttpClient {
     public static void main(String[] args) throws IOException {
-
+        //post message.
         String address="http://localhost/message/?username=user1&password=mypassword";
         String POST="POST";
         String GET="GET";

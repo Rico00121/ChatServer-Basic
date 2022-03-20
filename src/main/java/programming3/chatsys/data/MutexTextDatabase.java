@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * @author Maelick Claes (maelick.claes@oulu.fi)
- */
 public class MutexTextDatabase extends TextDatabase {
     private final ReentrantLock usersLock = new ReentrantLock();
     private final ReentrantLock messagesLock = new ReentrantLock();

@@ -1,6 +1,5 @@
 package programming3.chatsys.http;
 
-import com.sun.jndi.toolkit.url.Uri;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.json.JSONObject;
